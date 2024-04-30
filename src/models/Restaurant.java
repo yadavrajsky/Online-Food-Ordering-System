@@ -7,15 +7,16 @@ public class Restaurant {
     private String name;
     private String location;
     private boolean isDeactivated;
-    private HashMap<String, LocalTime> openingAndClosingTimings;
-    private boolean ValetParking;
+    HashMap<String, HashMap<String, LocalTime>> openingAndClosingTimings;
+    private boolean valetParking;
 
-    public Restaurant(String name, String location, boolean valetParking) {
-        isDeactivated = false;
-        openingAndClosingTimings = new HashMap<>();
+    public Restaurant(String name, String location, boolean isDeactivated,
+            HashMap<String, HashMap<String, LocalTime>> openingAndClosingTimings, boolean valetParking) {
         this.name = name;
         this.location = location;
-        ValetParking = valetParking;
+        this.isDeactivated = isDeactivated;
+        this.openingAndClosingTimings = openingAndClosingTimings;
+        this.valetParking = valetParking;
     }
 
     public String getName() {
@@ -42,20 +43,20 @@ public class Restaurant {
         isDeactivated = deactivated;
     }
 
-    public HashMap<String, LocalTime> getOpeningAndClosingTimings() {
+    public HashMap<String, HashMap<String, LocalTime>> getOpeningAndClosingTimings() {
         return openingAndClosingTimings;
     }
 
-    public void setOpeningAndClosingTimings(HashMap<String, LocalTime> openingAndClosingTimings) {
+    public void setOpeningAndClosingTimings(HashMap<String, HashMap<String, LocalTime>> openingAndClosingTimings) {
         this.openingAndClosingTimings = openingAndClosingTimings;
     }
 
     public boolean isValetParking() {
-        return ValetParking;
+        return valetParking;
     }
 
     public void setValetParking(boolean valetParking) {
-        ValetParking = valetParking;
+        this.valetParking = valetParking;
     }
 
     @Override
@@ -65,7 +66,7 @@ public class Restaurant {
                 ", location='" + location + '\'' +
                 ", isDeactivated=" + isDeactivated +
                 ", openingAndClosingTimings=" + openingAndClosingTimings +
-                ", ValetParking=" + ValetParking +
+                ", ValetParking=" + valetParking +
                 '}';
     }
 }

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.time.LocalTime;
 
 public class FineDiningRestaurant extends Restaurant {
-    MenuItems menuITems;
+    MenuItem menuITems;
     boolean takeAway;
     boolean delivery;
     boolean dineIn;

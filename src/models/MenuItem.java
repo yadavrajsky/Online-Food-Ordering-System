@@ -3,10 +3,10 @@ package models;
 import java.util.HashMap;
 import java.util.List;
 
-public class MenuItems {
+public class MenuItem {
     private HashMap<String, List<String>> items;
 
-    public MenuItems() {
+    public MenuItem() {
         this.items = new HashMap<>();
     }
 

@@ -4,19 +4,27 @@ import java.time.LocalTime;
 import java.util.HashMap;
 
 public class Restaurant {
+    private long id;
     private String name;
     private String location;
     private boolean isDeactivated;
     HashMap<String, HashMap<String, LocalTime>> openingAndClosingTimings;
     private boolean valetParking;
+    public MenuItem menuITems;
 
-    public Restaurant(String name, String location, boolean isDeactivated,
+    public Restaurant(long id, String name, String location, boolean isDeactivated,
             HashMap<String, HashMap<String, LocalTime>> openingAndClosingTimings, boolean valetParking) {
+        this.id = id;
         this.name = name;
         this.location = location;
         this.isDeactivated = isDeactivated;
         this.openingAndClosingTimings = openingAndClosingTimings;
         this.valetParking = valetParking;
+        this.menuITems = new MenuItem();
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getName() {
@@ -62,11 +70,13 @@ public class Restaurant {
     @Override
     public String toString() {
         return "Restaurant{" +
-                "name='" + name + '\'' +
-                ", location='" + location + '\'' +
-                ", isDeactivated=" + isDeactivated +
-                ", openingAndClosingTimings=" + openingAndClosingTimings +
-                ", ValetParking=" + valetParking +
+                "\nId='" + id + '\'' +
+                "\nname='" + name + '\'' +
+                "\nlocation='" + location + '\'' +
+                "\nisDeactivated=" + isDeactivated +
+                "\nopeningAndClosingTimings=" + openingAndClosingTimings +
+                "\nValetParking=" + valetParking +
+                "\nMenu=" + menuITems +
                 '}';
     }
 }

@@ -46,4 +46,21 @@ public class MenuItem {
         menuItems.remove(itemName);
         this.items.put(key, menuItems);
     }
+
+    //display menu items of a particular menu
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (String key : items.keySet()) {
+            sb.append(key).append(": ");
+            List<String> menuItems = items.get(key);
+            for (String item : menuItems) {
+            sb.append(item).append(", ");
+            }
+            sb.delete(sb.length() - 2, sb.length()); // Remove the last comma and space
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }

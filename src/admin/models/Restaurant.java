@@ -1,7 +1,9 @@
-package models;
+package admin.models;
 
 import java.time.LocalTime;
 import java.util.HashMap;
+
+import repository.MenuItemManager;
 
 public class Restaurant {
     private long id;
@@ -10,7 +12,7 @@ public class Restaurant {
     private boolean isDeactivated;
     HashMap<String, HashMap<String, LocalTime>> openingAndClosingTimings;
     private boolean valetParking;
-    public MenuItem menuITems;
+    public MenuItemManager menuItemManager;
 
     public Restaurant(long id, String name, String location, boolean isDeactivated,
             HashMap<String, HashMap<String, LocalTime>> openingAndClosingTimings, boolean valetParking) {
@@ -20,7 +22,7 @@ public class Restaurant {
         this.isDeactivated = isDeactivated;
         this.openingAndClosingTimings = openingAndClosingTimings;
         this.valetParking = valetParking;
-        this.menuITems = new MenuItem();
+        this.menuItemManager = new MenuItemManager();
     }
 
     public long getId() {
@@ -76,7 +78,7 @@ public class Restaurant {
                 "\nisDeactivated=" + isDeactivated +
                 "\nopeningAndClosingTimings=" + openingAndClosingTimings +
                 "\nValetParking=" + valetParking +
-                "\nMenu=" + menuITems +
+                "\nMenu=" + menuItemManager +
                 '}';
     }
 }

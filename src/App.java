@@ -1,13 +1,18 @@
-import models.FastFoodRestaurant;
-import models.FineDiningRestaurant;
-import models.Restaurant;
 import repository.RestaurantManager;
-import utility.RandomRestaurantGenerator;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+
+import admin.models.FastFoodRestaurant;
+import admin.models.FineDiningRestaurant;
+import admin.models.MenuItem;
+import admin.models.Restaurant;
+import admin.utility.RandomRestaurantGenerator;
 
 public class App {
     private static String getWeekDayName(int dayOfWeek) {
@@ -37,15 +42,14 @@ public class App {
             System.out.println("");
             int option = 0;
             do {
-                System.out.println("1. Add Restaurant"); // Done
-                System.out.println("2. Update Restaurant"); // Achint
-                System.out.println("3. Deactivate Restaurant"); // Done
-                System.out.println("4. Add MenuItems"); // Divyansh
-                System.out.println("5. Update MenuItems"); // Divyansh
-                System.out.println("5. Delete MenuItems");
-                System.out.println("7. Activation Restaurant");// Arpit
-                System.out.println("8. Display Restaurant"); // Done
-                System.out.println("9. Exit"); // Akash
+                System.out.println("1. Add Restaurant");
+                System.out.println("2. Update Restaurant");
+                System.out.println("3. Deactivate Restaurant");
+                System.out.println("4. Add MenuItems");
+                System.out.println("5. Update MenuItems");
+                System.out.println("6. Activation Restaurant");
+                System.out.println("7. Display Restaurant");
+                System.out.println("8. Exit");
                 option = sc.nextInt();
                 switch (option) {
                     case 1:
@@ -201,8 +205,7 @@ public class App {
                                 flag = true;
                             }
                         }
-                        if (!flag)
-                        {
+                        if (!flag) {
                             System.out.println("------------------".repeat(3));
                             System.out.println("Restaurant with given id not found!");
                             System.out.println("------------------".repeat(3));
@@ -212,102 +215,81 @@ public class App {
                         // Add menu
                         restaurantManager.displayRestaurants();
                         System.out.println("Choose the restaurant you want to add menu to:");
-                        int restaurantIndex=sc.nextInt();
+                        int restaurantIndex = sc.nextInt();
                         sc.nextLine();
-                        ArrayList<Restaurant> restaurantsList= new ArrayList<>(restaurantManager.getRestaurants());
-                        Restaurant restaurant = restaurantsList.get(restaurantIndex-1);
+                        ArrayList<Restaurant> restaurantsList = new ArrayList<>(restaurantManager.getRestaurants());
+                        Restaurant restaurant = restaurantsList.get(restaurantIndex - 1);
                         System.out.println("Add Menu Type:");
                         String menuType = sc.nextLine();
-                        String menuItem = null;
-                        List<String> menuItems = new ArrayList<>();
+                        String menuItemName = "";
+                        double price = 0;
+                        List<MenuItem> menuItems = new ArrayList<>();
                         System.out.println("Enter -1 to exit : ");
                         do {
-                            menuItem = sc.nextLine();
-                            if(!menuItem.equals("-1"))
-                            menuItems.add(menuItem);
-                        } while (!menuItem.equals("-1"));
-                        restaurant.menuITems.addMenu(menuType, menuItems);
+
+                            System.out.println("Enter Menu Item Name :");
+                            menuItemName = sc.nextLine();
+                            if (!menuItemName.equals("-1")) {
+                                System.out.println("Enter Price :");
+                                price = sc.nextDouble();
+                                sc.nextLine();
+                                menuItems.add(new MenuItem(menuItemName, price));
+                            }
+                        } while (!menuItemName.equals("-1"));
+                        restaurant.menuItemManager.addMenu(menuType, menuItems);
                         break;
-                    case 5: 
+                    case 5:
                         // Update Menu
                         restaurantManager.displayRestaurants();
-                        System.out.println("Choose the restaurant you want to add menu to:");
-                        restaurantIndex=sc.nextInt();
+                        System.out.println("Choose the restaurant you want to update menu :");
+                        restaurantIndex = sc.nextInt();
                         sc.nextLine();
-                        restaurantsList= new ArrayList<>(restaurantManager.getRestaurants());
-                        Restaurant restaurantForUpdatingMenu =restaurantsList.get(restaurantIndex-1);
-                        System.out.println("1.Do you want to update whole menu:");
-                        System.out.println("2.Do you want to update a items in particular menu:");
-                        int options=sc.nextInt();
+                        restaurantsList = new ArrayList<>(restaurantManager.getRestaurants());
+                        Restaurant restaurantForUpdatingMenu = restaurantsList.get(restaurantIndex - 1);
+                        System.out.println("Choose Menu Type:");
+                        restaurantForUpdatingMenu.menuItemManager.displayMenu();
+                        List<String> menuTypes = restaurantForUpdatingMenu.menuItemManager.getMenuTypes();
+                        int menuTypeIndex = sc.nextInt();
+                        sc.nextLine();
+                        menuType = menuTypes.get(menuTypeIndex - 1);
+                        System.out.println("1. Do you want to update whole menu:");
+                        System.out.println("2. Do you want to update a items in particular menu:");
+                        int options = sc.nextInt();
                         switch (options) {
                             case 1:
-                            System.out.println("Choose Menu Type:");
-                            restaurantForUpdatingMenu
-                            menuType = sc.nextLine();
-                            menuItem = null;
-                            menuItems = new ArrayList<>();
-                            System.out.println("Enter -1 to exit : ");
-                            do {
-                                menuItem = sc.nextLine();
-                                if(!menuItem.equals("-1"))
-                                menuItems.add(menuItem);
-                            } while (!menuItem.equals("-1"));
-                            restaurantForUpdatingMenu.menuITems.addMenu(menuType, menuItems);
-                            break;
+                                menuItems = new ArrayList<>();
+                                System.out.println("Enter list of items or -1 to exit : ");
+                                do {
+                                    System.out.println("Enter Menu Item Name :");
+                                    menuItemName = sc.nextLine();
+                                    if (menuItemName.equals("-1")) {
+                                        System.out.println("Enter Price :");
+                                        price = sc.nextDouble();
+                                        sc.nextLine();
+                                        menuItems.add(new MenuItem(menuItemName, price));
+                                    }
+                                } while (!menuItemName.equals("-1"));
+                                restaurantForUpdatingMenu.menuItemManager.updateMenu(menuType, menuItems);
+                                break;
                             case 2:
-                                System.out.println("Choose Menu Type:");
-
+                                System.out.println("Choose menu Item you want to update:");
+                                restaurantForUpdatingMenu.menuItemManager.displayMenuItems(menuType);
+                                int menuItemIndex = sc.nextInt();
+                                sc.nextLine();
+                                System.out.println("Enter new Menu Item Name :");
+                                menuItemName = sc.nextLine();
+                                System.out.println("Enter new Price :");
+                                price = sc.nextDouble();
+                                restaurantForUpdatingMenu.menuItemManager.updateItem(menuType, menuItemIndex,
+                                        menuItemName, price);
                                 break;
                             default:
+                                System.out.println("Invalid Option");
+                                break;
                         }
                         break;
-                        // long flagMenus=0;
-                        // if (flagMenus == 0) {
-                        //     System.out.println("Update Cuisin Item:");
-                        //     String item = sc.nextLine();
-                        //     if (restaurantForUpdatingMenu != null)
-                        //         restaurantForUpdatingMenu.menuITems.updateItem(cuisineType, item);
-                        // } else {
-                        //     List<String> items = new ArrayList<>();
-                        //     int flagItem = 1;
-                        //     do {
-                        //         System.out.println("Update Cuisin Items:");
-                        //         String item = sc.nextLine();
-                        //         items.add(item);
-                        //         System.out.println("Do you want to update more: 1 for Yes and 0 for NO:");
-                        //         flagItem = sc.nextInt();
-                        //     } while (flagItem == 1);
-                        //     restaurantForUpdatingMenu.menuITems.updateMenu(cuisineType, items);
-                        // }
-                        // break;
-                    case 6: // Delete Menu
-                        // System.out.println("Enter the ID of the retaurant you want to access Menu of:");
-                        // long idToMenu = sc.nextLong();
-                        // Restaurant restaurantForDeleteMenu = null;
-                        // for (Restaurant currentRestaurant : restaurantManager.getRestaurants()) {
-                        //     if (currentRestaurant.getId() == idToMenu) {
-                        //         restaurantForDeleteMenu = currentRestaurant;
-                        //         break;
-                        //     }
-                        // }
-                        // System.out.println("Delete Menu :");
-                        // System.out.println("Do you want to Delete whole menu: 1 for Yes and 0 for NO:");
-                        // flagMenus = sc.nextInt();
-                        // if (flagMenus == 0) {
-                        //     System.out.println("Add Cuisin Type:");
-                        //     cuisineType = sc.nextLine();
-                        //     System.out.println("Add Cuisin Item:");
-                        //     String item = sc.nextLine();
-                        //     if (restaurantForDeleteMenu != null)
-                        //         restaurantForDeleteMenu.menuITems.deleteItem(cuisineType, item);
-                        // } else {
-                        //     System.out.println("Add Cuisin Type:");
-                        //     cuisineType = sc.nextLine();
-                        //     restaurantForDeleteMenu.menuITems.deleteMenu(cuisineType);
-                        // }
-                        break;
-                    // Activaion
-                    case 7:
+
+                    case 6:
                         System.out.println("Enter the ID of the retaurant you want to Activate:");
                         long idToActivate = sc.nextLong();
                         boolean flag2 = false;
@@ -322,17 +304,19 @@ public class App {
                             System.out.println("Restaurant with given id not found!");
                         }
                         break;
+
+                    case 7:
+                        restaurantManager.displayRestaurants();
+                        break;
+                    case 8:
+                        System.out.println("Thank you visit again! ");
+                        option = -1;
                     default:
                         System.out.println("Invalid Option");
                         break;
-                    case 8:
-                        restaurantManager.displayRestaurants();
-                        break;
-                    case 9:
-                        System.out.println("Thank you visit again! ");
-                        option = -1;
                 }
             } while (option != -1);
         }
     }
 }
+

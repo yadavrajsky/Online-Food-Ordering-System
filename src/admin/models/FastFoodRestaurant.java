@@ -1,4 +1,4 @@
-package models;
+package admin.models;
 
 import java.util.HashMap;
 import java.time.LocalTime;

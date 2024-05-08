@@ -2,7 +2,7 @@ package repository;
 
 import java.util.HashSet;
 
-import models.Restaurant;
+import admin.models.Restaurant;
 
 public class RestaurantManager {
     HashSet<Restaurant> restaurants;

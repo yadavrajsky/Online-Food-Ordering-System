@@ -1,12 +1,12 @@
-package utility;
+package admin.utility;
 
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Random;
 
-import models.FastFoodRestaurant;
-import models.FineDiningRestaurant;
-import models.Restaurant;
+import admin.models.FastFoodRestaurant;
+import admin.models.FineDiningRestaurant;
+import admin.models.Restaurant;
 
 public class RandomRestaurantGenerator {
     private static String getRandomName() {

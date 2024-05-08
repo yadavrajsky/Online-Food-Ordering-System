@@ -2,13 +2,13 @@ package payments.models;
 
 import java.util.Scanner;
 
-public class CardPayment implements PaymentMethod {
+public class CardPaymentMethod implements PaymentMethod {
     private String cardNumber;
     private String expiryDate;
     private String cvv;
     private String cardHolderName;
 
-    public CardPayment(String cardNumber, String expiryDate, String cvv, String cardHolderName) {
+    public CardPaymentMethod(String cardNumber, String expiryDate, String cvv, String cardHolderName) {
         this.cardNumber = cardNumber;
         this.expiryDate = expiryDate;
         this.cvv = cvv;

@@ -4,7 +4,7 @@ import cart.models.Cart;
 import cart.models.CartProduct;
 import payments.models.PaymentMethod;
 
-class Order {
+public class Order {
     private String specialInstructions;
     private Cart cart;
     private String deliveryAddress;

@@ -1,4 +1,4 @@
-package customer.models;
+package cart.models;
 
 import java.util.ArrayList;
 

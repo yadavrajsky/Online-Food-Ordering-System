@@ -34,7 +34,7 @@ public class OrderManager {
         cart.addProduct(cartProduct2);
         cart.addProduct(cartProduct3);
         PaymentMethod paymentMethod = new CreditCardPayment("1234", "1234", "123", "12/23");
-        Order order=new Order(cart, "Delhi", "Delhi", paymentMethod, "No Special Instructions");
+        Order order=new Order(cart, 1,"Delhi", "Delhi", paymentMethod, "No Special Instructions");
         order.placeOrder();
 
         

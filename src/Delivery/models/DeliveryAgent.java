@@ -1,6 +1,8 @@
 package Delivery.models;
 import  orders.models.Order;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,9 +11,12 @@ public class DeliveryAgent {
     Map<Integer,List<Order>> pendingOrders;
     private int agent_id;
 
-    public DeliveryAgent(Map<Integer, List<Order>> pendingOrders, int agent_id) {
-        this.pendingOrders = pendingOrders;
+    //new agent will be added to hashmap according to id
+    public DeliveryAgent(int agent_id) {
+        this.pendingOrders = new HashMap<>();
+        pendingOrders.put(agent_id, new ArrayList<>());
         this.agent_id = agent_id;
+
     }
 
     // view pending orders assigned,  along with delivery addresses and contact information(printed toString of order).
@@ -23,6 +28,7 @@ public class DeliveryAgent {
         for (Order ord :pendingOrders.get(agent_id))
             System.out.println(ord);
     }
+    // assign a new order to the agent
     public boolean assignOrder(int agent_id, Order ord){
         if(!pendingOrders.containsKey(agent_id)) {
             System.out.println("agent not available!");
@@ -36,6 +42,7 @@ public class DeliveryAgent {
         }
         return true;
     }
+    // mark order as competed and remove from the pending order list of the agent
     public boolean orderCompleted(int agent_id, Order ord){
         if(!pendingOrders.containsKey(agent_id)) {
             System.out.println("agent not available!");
